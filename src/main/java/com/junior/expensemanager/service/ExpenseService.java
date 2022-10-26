@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,4 +70,16 @@ public class ExpenseService {
         return expenseDTO;
     }
 
+    public List<ExpenseDTO> getFilterExpenses(String keyword, String sortBy, Date formDate, Date toDate) throws ParseException {
+        List<Expense> expenses=  expenseRepository.findByNameContainingAndDateBetween(keyword, formDate, toDate);
+        List<ExpenseDTO> expensesDTO = expenses.stream().map(this::mapToDTO).collect(Collectors.toList());
+        if(sortBy != null) {
+            if(sortBy.equals("date")) {
+                expensesDTO.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+            } else {
+                expensesDTO.sort((o1, o2) -> o2.getAmount().compareTo(o1.getAmount()));
+            }
+        }
+        return expensesDTO;
+    }
 }

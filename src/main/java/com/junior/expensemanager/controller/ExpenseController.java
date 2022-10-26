@@ -1,6 +1,7 @@
 package com.junior.expensemanager.controller;
 
 import com.junior.expensemanager.dto.ExpenseDTO;
+import com.junior.expensemanager.dto.ExpenseFilterDTO;
 import com.junior.expensemanager.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ public class ExpenseController {
 
     @GetMapping("/expenses")
     public String showExpenseList(Model model) {
+        model.addAttribute("filter", new ExpenseFilterDTO());
         model.addAttribute("expenses", expenseService.getAllExpenseList());
         return "expenses-list";
     }
