@@ -3,6 +3,7 @@ package com.junior.expensemanager.service;
 import com.junior.expensemanager.dto.ExpenseDTO;
 import com.junior.expensemanager.entity.Expense;
 import com.junior.expensemanager.repository.ExpenseRepository;
+import com.junior.expensemanager.util.DateTimeUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class ExpenseService {
 //        return expenseDTO;
 
          ExpenseDTO expenseDTO = modelMapper.map(expense, ExpenseDTO.class);
+         expenseDTO.setDateString(DateTimeUtil.convertToString(expense.getDate()));
          return expenseDTO;
     }
 }

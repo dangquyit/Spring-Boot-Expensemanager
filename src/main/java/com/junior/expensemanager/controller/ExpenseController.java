@@ -1,6 +1,8 @@
 package com.junior.expensemanager.controller;
 
 import com.junior.expensemanager.dto.ExpenseDTO;
+import com.junior.expensemanager.service.ExpenseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,19 +15,12 @@ import java.util.List;
 
 @Controller
 public class ExpenseController {
-    private static List<ExpenseDTO> list = new ArrayList<>();
-    static {
-        ExpenseDTO exp1 =new ExpenseDTO();
-        exp1.setId(1L);
-        exp1.setExpenseId("1234");
-        exp1.setDate(new Date(System.currentTimeMillis()));
-        exp1.setAmount(BigDecimal.valueOf(300.0));
-        exp1.setDescription("dasdsd");
-        list.add(exp1);
-    }
+    @Autowired
+    private ExpenseService expenseService;
+
     @GetMapping("/expenses")
     public String showExpenseList(Model model) {
-        model.addAttribute("expenses", list);
+        model.addAttribute("expenses", expenseService.getAllExpenseList());
         return "expenses-list";
     }
 }
