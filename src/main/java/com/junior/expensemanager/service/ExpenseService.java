@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,5 +39,23 @@ public class ExpenseService {
          ExpenseDTO expenseDTO = modelMapper.map(expense, ExpenseDTO.class);
          expenseDTO.setDateString(DateTimeUtil.convertToString(expense.getDate()));
          return expenseDTO;
+    }
+
+    private Expense mapToEntity(ExpenseDTO expenseDTO) throws ParseException {
+        // map the DTO to entity
+        Expense expense = modelMapper.map(expenseDTO, Expense.class);
+        // TODO: generate the expense id
+
+        // TODO: set the expense date
+        expense.setDate(DateTimeUtil.convertStringToDate(expenseDTO.getDateString()));
+
+        // Return expense entity
+        return expense;
+    }
+
+    public ExpenseDTO saveExpenseDetails(ExpenseDTO expenseDTO) throws ParseException {
+        Expense expense = mapToEntity(expenseDTO);
+        expense =  expenseRepository.save(expense);
+        return mapToDTO(expense);
     }
 }

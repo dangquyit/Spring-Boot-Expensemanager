@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class ExpenseDTO  {
 
      private BigDecimal  amount;
 
-     private Date  date;
+     private Date date;
 
      private String dateString;
 
