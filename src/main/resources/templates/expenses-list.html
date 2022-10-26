@@ -18,6 +18,7 @@
         <th>Description</th>
         <th>Amount</th>
         <th>Date</th>
+        <th colspan="3">Action</th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,8 @@
         <td th:text="${expense.description}"></td>
         <td th:text="${expense.amount}"></td>
         <td th:text="${expense.dateString}"></td>
+        <td><a th:href="@{/delete-expense/(id = ${expense.id})}"
+               onclick="return confirm('Are you sure want to delete the expense?')">Delete</a></td>
     </tr>
     </tbody>
 </table>

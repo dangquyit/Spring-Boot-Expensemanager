@@ -58,4 +58,8 @@ public class ExpenseService {
         expense =  expenseRepository.save(expense);
         return mapToDTO(expense);
     }
+
+    public void deleteExpense(Long id) {
+        expenseRepository.deleteById(id);
+    }
 }
