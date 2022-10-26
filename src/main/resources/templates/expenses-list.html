@@ -29,6 +29,7 @@
         <td th:text="${expense.dateString}"></td>
         <td><a th:href="@{/delete-expense/(id = ${expense.id})}"
                onclick="return confirm('Are you sure want to delete the expense?')">Delete</a></td>
+        <td><a th:href="@{/update-expense/(id = ${expense.id})}">Update</a></td>
     </tr>
     </tbody>
 </table>

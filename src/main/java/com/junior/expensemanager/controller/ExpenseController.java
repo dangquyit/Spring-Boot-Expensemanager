@@ -43,4 +43,10 @@ public class ExpenseController {
         expenseService.deleteExpense(id);
         return "redirect:/expenses";
     }
+
+    @GetMapping("/update-expense")
+    public String updateExpense(@RequestParam("id") Long id, Model model) throws ParseException {
+        model.addAttribute("expense", expenseService.findById(id));
+        return "expense-form";
+    }
 }

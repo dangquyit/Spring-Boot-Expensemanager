@@ -62,4 +62,11 @@ public class ExpenseService {
     public void deleteExpense(Long id) {
         expenseRepository.deleteById(id);
     }
+
+    public ExpenseDTO findById(Long id) throws ParseException {
+        Expense expense =  expenseRepository.findById(id).get();
+        ExpenseDTO  expenseDTO = mapToDTO(expense);
+        return expenseDTO;
+    }
+
 }

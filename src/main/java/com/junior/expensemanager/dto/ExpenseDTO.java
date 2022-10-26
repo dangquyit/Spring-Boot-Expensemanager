@@ -14,8 +14,6 @@ import java.sql.Date;
 public class ExpenseDTO  {
     private Long id;
 
-    private String expenseId;
-
      private String name;
 
      private String description;
