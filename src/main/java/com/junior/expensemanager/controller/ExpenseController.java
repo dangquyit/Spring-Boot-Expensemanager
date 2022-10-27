@@ -2,24 +2,27 @@ package com.junior.expensemanager.controller;
 
 import com.junior.expensemanager.dto.ExpenseDTO;
 import com.junior.expensemanager.dto.ExpenseFilterDTO;
-import com.junior.expensemanager.entity.Expense;
 import com.junior.expensemanager.service.ExpenseService;
+import com.junior.expensemanager.validator.ExpenseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.model.IModel;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
+
+    @Autowired
+    private ExpenseValidator expenseValidator;
 
     @GetMapping("/expenses")
     public String showExpenseList(Model model) throws ParseException {
@@ -37,7 +40,11 @@ public class ExpenseController {
     }
 
     @PostMapping("/save-or-update-expense")
-    public String saveOrUpdateExpense(@ModelAttribute("expense") ExpenseDTO expenseDTO) throws ParseException {
+    public String saveOrUpdateExpense(@ModelAttribute("expense") ExpenseDTO expenseDTO, BindingResult result) throws ParseException {
+        expenseValidator.validate(expenseDTO, result);
+        if(result.hasErrors()) {
+            return "expense-form";
+        }
         expenseService.saveExpenseDetails(expenseDTO);
         return "redirect:/expenses";
     }

@@ -11,10 +11,13 @@
 
     <form th:action="@{/save-or-update-expense}" th:object="${expense}" method="post">
         <input type ="text" placeholder="Enter expense name" th:field="*{name}"/>
+        <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         <br/><br/>
         <input type ="text" placeholder="Enter expense amount" th:field="*{amount}"/>
+        <span style="color: red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
         <br/><br/>
-        <input type ="text" placeholder="dd/mm/yyyy" th:field="*{dateString}" id="createdAt" />
+        <input  type ="text" placeholder="dd/mm/yyyy" th:field="*{dateString}" id="createdAt" />
+        <span style="color: red" th:if="${#fields.hasErrors('dateString')}" th:errors="*{dateString}"></span>
         <br/><br/>
         <textarea rows ="5" placeholder="Enter expense description" th:field="*{description}"></textarea>
         <br/><br/>
