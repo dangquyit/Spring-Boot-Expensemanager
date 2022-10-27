@@ -29,6 +29,7 @@ public class ExpenseFilterController {
         Date fromDate = !fromDateStr.isEmpty() ? DateTimeUtil.convertStringToDate(fromDateStr) : new Date(0);
         Date toDate = !toDateStr.isEmpty() ? DateTimeUtil.convertStringToDate(toDateStr) : new Date(System.currentTimeMillis());
         List<ExpenseDTO> expensesDTO = expenseService.getFilterExpenses(keyword, sortBy, fromDate, toDate);
+        model.addAttribute("total", expenseService.totalExpenses(expensesDTO));
         model.addAttribute("expenses", expensesDTO);
         return "expenses-list";
     }

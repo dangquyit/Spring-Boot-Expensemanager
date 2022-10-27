@@ -2,6 +2,7 @@ package com.junior.expensemanager.controller;
 
 import com.junior.expensemanager.dto.ExpenseDTO;
 import com.junior.expensemanager.dto.ExpenseFilterDTO;
+import com.junior.expensemanager.entity.Expense;
 import com.junior.expensemanager.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,11 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @GetMapping("/expenses")
-    public String showExpenseList(Model model) {
+    public String showExpenseList(Model model) throws ParseException {
+        List<ExpenseDTO> expenses = expenseService.getAllExpenseList();
         model.addAttribute("filter", new ExpenseFilterDTO());
-        model.addAttribute("expenses", expenseService.getAllExpenseList());
+        model.addAttribute("expenses", expenses);
+        model.addAttribute("total", expenseService.totalExpenses(expenses));
         return "expenses-list";
     }
 

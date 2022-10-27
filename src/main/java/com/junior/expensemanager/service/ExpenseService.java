@@ -8,7 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +25,7 @@ public class ExpenseService {
 
     public List<ExpenseDTO> getAllExpenseList() {
         List<Expense> listExpense = expenseRepository.findAll();
-        List<ExpenseDTO> listExpenseDTO = listExpense.stream().map(this::mapToDTO).collect(Collectors.toList());
-        return listExpenseDTO;
+        return listExpense.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
     private ExpenseDTO mapToDTO(Expense expense) {
@@ -66,8 +67,7 @@ public class ExpenseService {
 
     public ExpenseDTO findById(Long id) throws ParseException {
         Expense expense =  expenseRepository.findById(id).get();
-        ExpenseDTO  expenseDTO = mapToDTO(expense);
-        return expenseDTO;
+        return mapToDTO(expense);
     }
 
     public List<ExpenseDTO> getFilterExpenses(String keyword, String sortBy, Date formDate, Date toDate) throws ParseException {
@@ -81,5 +81,14 @@ public class ExpenseService {
             }
         }
         return expensesDTO;
+    }
+
+    public String totalExpenses(List<ExpenseDTO> expenses) throws ParseException {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
+        BigDecimal sum = new BigDecimal(0);
+        for(ExpenseDTO o : expenses) {
+            sum = sum.add(o.getAmount());
+        }
+        return decimalFormat.format(sum);
     }
 }
