@@ -9,12 +9,16 @@
 <hr/>
     <form th:object="${user}" th:action="@{/register}" method="post">
         <input type="text" th:field="*{name}" placeholder="Enter name">
+        <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         <br/><br/>
         <input type="text" th:field="*{email}" placeholder="Enter email">
+        <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
         <br/><br/>
         <input type="password" th:field="*{password}" placeholder="Enter password">
+        <span style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <br/><br/>
         <input type="password" th:field="*{confirmPassword}" placeholder="Enter confirm password">
+        <span style="color: red" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
         <br/><br/>
         <button type="submit">Submit</button>
         <br/><br/>
