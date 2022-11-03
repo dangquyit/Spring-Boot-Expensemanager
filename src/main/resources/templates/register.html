@@ -7,7 +7,7 @@
 <body>
   <h1>Register New User</h1>
 <hr/>
-    <form th:object="${user}" th:action="@{/register}" method="post">
+    <form th:object="${user}" th:action="@{/save-or-update-user}" method="post">
         <input type="text" th:field="*{name}" placeholder="Enter name">
         <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         <br/><br/>
