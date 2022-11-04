@@ -7,6 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
     @Autowired
@@ -26,4 +30,14 @@ public class UserService {
     public void save(UserDTO userDTO) {
         userRepository.save(mapToEntity(userDTO));
     }
+
+    public List<UserDTO> findByEmail(String email) {
+        List<User> userList = userRepository.findAllByEmail(email);
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for(User user : userList) {
+            userDTOs.add(mapToDTO(user));
+        }
+        return userDTOs;
+    }
+
 }
