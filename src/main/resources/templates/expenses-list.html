@@ -9,13 +9,16 @@
 <h1>List of Expenses</h1>
 <hr/>
 <div>
-    <h2>You are  viewing the expenses totalling of <span style="color: red" th:text="${total} + ' VNĐ'"></span></h2>
+    <a th:href="@{/logout}">Logout</a>
+</div>
+<div>
+    <h2>You are viewing the expenses totalling of <span style="color: red" th:text="${total} + ' VNĐ'"></span></h2>
 </div>
 <form method="get" th:object="${filter}" th:action="@{/filter-expenses}">
-    Search by keyword: <input  type="text" placeholder="Enter keyword" th:field="*{keyword}" >
+    Search by keyword: <input type="text" placeholder="Enter keyword" th:field="*{keyword}">
     <select th:field="*{sortBy}">
         <option value="date">Date</option>
-        <option value="amount">Amount </option>
+        <option value="amount">Amount</option>
     </select>
     <input type="text" id="fromDate" placeholder="From date" th:field="*{fromDate}">
     <input type="text" id="toDate" placeholder="To date" th:field="*{toDate}">

@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.AntPathMatcher;
 
 @Configuration
 public class CustomSecurityConfig {
@@ -28,6 +30,11 @@ public class CustomSecurityConfig {
                 .defaultSuccessUrl("/expenses")
                 .usernameParameter("email")
                 .passwordParameter("password")
+                .and()
+                .logout().invalidateHttpSession(true).clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout=true")
+                .permitAll()
 
         ;
         return http.build();
