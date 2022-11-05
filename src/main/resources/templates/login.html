@@ -13,9 +13,12 @@
     </div>
     <div>
         <form id="loginForm" th:action="@{/login}" method="post">
-            <input type="text" placeholder="Enter email">
+            <div th:if="${param.error}">
+                Invalid username or password
+            </div>
+            <input type="text" name="email" placeholder="Enter email">
             <br/><br/>
-            <input type="password" placeholder="Enter password">
+            <input type="password" name="password" placeholder="Enter password">
             <br/><br/>
             <button type="submit">Login</button>
             <br/><br/>

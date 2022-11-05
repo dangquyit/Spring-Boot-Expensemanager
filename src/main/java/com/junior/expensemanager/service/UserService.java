@@ -5,6 +5,7 @@ import com.junior.expensemanager.entity.User;
 import com.junior.expensemanager.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class UserService {
     @Autowired
     ModelMapper modelmapper;
 
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
     private User mapToEntity(UserDTO userDTO) {
         return modelmapper.map(userDTO, User.class);
     }
@@ -28,6 +32,7 @@ public class UserService {
     }
 
     public void save(UserDTO userDTO) {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userRepository.save(mapToEntity(userDTO));
     }
 
