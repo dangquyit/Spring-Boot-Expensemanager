@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
-    List<Expense> findByNameContainingAndDateBetween(String name, Date fromDate, Date toDate);
+    List<Expense> findByNameContainingAndDateBetweenAndUserId(String name, Date fromDate, Date toDate, Long id);
+
+    List<Expense> findByUserId(Long id);
 }

@@ -1,7 +1,9 @@
 package com.junior.expensemanager.service;
 
 import com.junior.expensemanager.dto.ExpenseDTO;
+import com.junior.expensemanager.dto.ExpenseFilterDTO;
 import com.junior.expensemanager.entity.Expense;
+import com.junior.expensemanager.entity.User;
 import com.junior.expensemanager.repository.ExpenseRepository;
 import com.junior.expensemanager.util.DateTimeUtil;
 import org.modelmapper.ModelMapper;
@@ -23,8 +25,12 @@ public class ExpenseService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private UserService userService;
+
     public List<ExpenseDTO> getAllExpenseList() {
-        List<Expense> listExpense = expenseRepository.findAll();
+        User user = userService.getLoggedInUser();
+        List<Expense> listExpense = expenseRepository.findByUserId(user.getId());
         return listExpense.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
@@ -57,6 +63,7 @@ public class ExpenseService {
 
     public ExpenseDTO saveExpenseDetails(ExpenseDTO expenseDTO) throws ParseException {
         Expense expense = mapToEntity(expenseDTO);
+        expense.setUser(userService.getLoggedInUser());
         expense =  expenseRepository.save(expense);
         return mapToDTO(expense);
     }
@@ -70,8 +77,20 @@ public class ExpenseService {
         return mapToDTO(expense);
     }
 
-    public List<ExpenseDTO> getFilterExpenses(String keyword, String sortBy, Date formDate, Date toDate) throws ParseException {
-        List<Expense> expenses=  expenseRepository.findByNameContainingAndDateBetween(keyword, formDate, toDate);
+    public List<ExpenseDTO> getFilterExpenses(ExpenseFilterDTO expenseFilterDTO) throws ParseException {
+        String keyword = expenseFilterDTO.getKeyword();
+        String sortBy = expenseFilterDTO.getSortBy();
+        String fromDateStr = expenseFilterDTO.getFromDate();
+        String toDateStr = expenseFilterDTO.getToDate();
+
+        Date fromDate = !fromDateStr.isEmpty() ? DateTimeUtil.convertStringToDate(fromDateStr) : new Date(0);
+        Date toDate = !toDateStr.isEmpty() ? DateTimeUtil.convertStringToDate(toDateStr) : new Date(System.currentTimeMillis());
+        User user = userService.getLoggedInUser();
+        List<Expense> expenses=  expenseRepository.findByNameContainingAndDateBetweenAndUserId(
+                keyword,
+                fromDate,
+                toDate,
+                user.getId());
         List<ExpenseDTO> expensesDTO = expenses.stream().map(this::mapToDTO).collect(Collectors.toList());
         if(sortBy != null) {
             if(sortBy.equals("date")) {
