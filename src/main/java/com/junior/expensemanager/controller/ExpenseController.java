@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -50,15 +47,15 @@ public class ExpenseController {
     }
 
 
-    @GetMapping("/delete-expense")
-    public String deleteExpense(@RequestParam("id") Long id) {
-        expenseService.deleteExpense(id);
+    @GetMapping("/delete-expense/{expenseId}")
+    public String deleteExpense(@PathVariable("expenseId") String expenseId) throws ParseException {
+        expenseService.deleteExpenseByExpenseId(expenseId);
         return "redirect:/expenses";
     }
 
-    @GetMapping("/update-expense")
-    public String updateExpense(@RequestParam("id") Long id, Model model) throws ParseException {
-        model.addAttribute("expense", expenseService.findById(id));
+    @GetMapping("/update-expense/{expenseId}")
+    public String updateExpense(@PathVariable("expenseId") String expenseId, Model model) throws ParseException {
+        model.addAttribute("expense", expenseService.findByIdExpenseId(expenseId));
         return "expense-form";
     }
 }

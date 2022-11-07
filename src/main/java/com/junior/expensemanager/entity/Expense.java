@@ -26,6 +26,8 @@ public class Expense {
 
     private Date date;
 
+    private String expenseId;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;

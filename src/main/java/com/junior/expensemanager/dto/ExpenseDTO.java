@@ -24,4 +24,6 @@ public class ExpenseDTO  {
 
      private String dateString;
 
+     private String expenseId;
+
 }

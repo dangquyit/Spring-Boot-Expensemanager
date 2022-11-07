@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,27 +54,26 @@ public class ExpenseService {
         // map the DTO to entity
         Expense expense = modelMapper.map(expenseDTO, Expense.class);
         // TODO: generate the expense id
-
+        expense.setExpenseId(UUID.randomUUID().toString());
         // TODO: set the expense date
         expense.setDate(DateTimeUtil.convertStringToDate(expenseDTO.getDateString()));
-
         // Return expense entity
         return expense;
     }
 
-    public ExpenseDTO saveExpenseDetails(ExpenseDTO expenseDTO) throws ParseException {
+    public void saveExpenseDetails(ExpenseDTO expenseDTO) throws ParseException {
         Expense expense = mapToEntity(expenseDTO);
         expense.setUser(userService.getLoggedInUser());
-        expense =  expenseRepository.save(expense);
-        return mapToDTO(expense);
+        expenseRepository.save(expense);
     }
 
-    public void deleteExpense(Long id) {
-        expenseRepository.deleteById(id);
+    public void deleteExpenseByExpenseId(String expenseId) throws ParseException {
+        Expense expense = expenseRepository.findByExpenseId(expenseId);
+        expenseRepository.delete(expense);
     }
 
-    public ExpenseDTO findById(Long id) throws ParseException {
-        Expense expense =  expenseRepository.findById(id).get();
+    public ExpenseDTO findByIdExpenseId(String expenseId) throws ParseException {
+        Expense expense =  expenseRepository.findByExpenseId(expenseId);
         return mapToDTO(expense);
     }
 
