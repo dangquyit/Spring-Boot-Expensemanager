@@ -26,6 +26,7 @@ public class Expense {
 
     private Date date;
 
+    @Column(nullable = false, unique = true)
     private String expenseId;
 
     @ManyToOne

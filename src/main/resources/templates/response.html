@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${notFound}">
+  <h1>Expense Not Available</h1>
+  <p th:text="${message}"></p>
+  <a th:href="@{/expenses}">Home</a>
+</div>
+
+<div th:if="${server}">
+    <h1>Contract Administrator</h1>
+    <p th:text="${message}"></p>
+    <p th:text="${stackTrace}"></p>
+    <a th:href="@{/expenses}">Home</a>
+</div>
+</body>
+</html>
