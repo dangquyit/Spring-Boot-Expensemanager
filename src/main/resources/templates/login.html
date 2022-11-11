@@ -7,10 +7,6 @@
 <body>
   <h1>Login</h1>
 <hr/>
-    <div th:if="${successMsg}">
-        <h1>Success!</h1>
-        <p>Thanks for Registering your account. Now you can start adding your expenses!</p>
-    </div>
     <div>
         <form id="loginForm" th:action="@{/login}" method="post">
             <div style="color: red" th:if="${param.error}">

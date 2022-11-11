@@ -15,4 +15,9 @@ public class ExpenseFilterDTO {
     private String fromDate;;
 
     private String toDate;
+
+    public ExpenseFilterDTO(String fromDate, String toDate) {
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+    }
 }

@@ -11,11 +11,17 @@
   <a th:href="@{/expenses}">Home</a>
 </div>
 
-<div th:if="${server}">
+<div th:if="${serverError}">
     <h1>Contract Administrator</h1>
     <p th:text="${message}"></p>
-    <p th:text="${stackTrace}"></p>
+    <p th:text="${stackTrack}"></p>
     <a th:href="@{/expenses}">Home</a>
+</div>
+
+<div th:if="${successMsg}">
+    <h1>Success!</h1>
+    <p>Thanks for Registering your account. Now you can start adding your expenses!</p>
+    <a th:href="@{/login}">Login</a>
 </div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.junior.expensemanager.controller;
 import com.junior.expensemanager.dto.ExpenseDTO;
 import com.junior.expensemanager.dto.ExpenseFilterDTO;
 import com.junior.expensemanager.service.ExpenseService;
+import com.junior.expensemanager.util.DateTimeUtil;
 import com.junior.expensemanager.validator.ExpenseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class ExpenseController {
     @GetMapping("/expenses")
     public String showExpenseList(Model model) throws Exception {
         List<ExpenseDTO> expenses = expenseService.getAllExpenseList();
-        model.addAttribute("filter", new ExpenseFilterDTO());
+        model.addAttribute("filter", new ExpenseFilterDTO(DateTimeUtil.getCurrentMonthStartDate(), DateTimeUtil.getCurrentMonthDate()));
         model.addAttribute("expenses", expenses);
         model.addAttribute("total", expenseService.totalExpenses(expenses));
         return "expenses-list";

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +34,9 @@ public class ExpenseService {
 
     public List<ExpenseDTO> getAllExpenseList() {
         User user = userService.getLoggedInUser();
-        List<Expense> listExpense = expenseRepository.findByUserId(user.getId());
+        List<Expense> listExpense = expenseRepository.findByDateBetweenAndUserId(
+                Date.valueOf(LocalDate.now().withDayOfMonth(1)),
+                Date.valueOf(LocalDate.now()), user.getId());
         return listExpense.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
@@ -67,6 +70,9 @@ public class ExpenseService {
 
     public void saveExpenseDetails(ExpenseDTO expenseDTO) throws ParseException {
         Expense expense = mapToEntity(expenseDTO);
+        if(!expense.getDate().before(new java.util.Date())) {
+            throw new RuntimeException("Future date is not allowed");
+        }
         expense.setUser(userService.getLoggedInUser());
         expenseRepository.save(expense);
     }

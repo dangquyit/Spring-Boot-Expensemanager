@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class GlobalDefaultExceptionHandler {
+public class GlobalDefaultExceptionHandler{
     @ExceptionHandler(ExpenseNotFoundException.class)
     public String handlerExpenseNotFoundException(HttpServletRequest request, Model model, ExpenseNotFoundException ex) {
         model.addAttribute("notFound", true);
@@ -19,7 +19,7 @@ public class GlobalDefaultExceptionHandler {
     public String handlerGlobalException(HttpServletRequest request, Model model, Exception ex) {
         model.addAttribute("serverError", true);
         model.addAttribute("message", ex.getMessage());
-        model.addAttribute("stackTrack", ex.getStackTrace());
+        model.addAttribute("stackTrack", "Something went wrong! Please contact Administrator");
         return "response";
     }
 }
