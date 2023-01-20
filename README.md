@@ -1,6 +1,6 @@
 # Ứng dụng quản lí chi tiêu
 production
-https://expensemanager-25-10-2022.herokuapp.com/
+https: http://expensemanager-env.eba-9ehxmguk.us-east-1.elasticbeanstalk.com
 - Đăng nhập
 - Đăng ký tài khoản 
 - Tính tổng tiền chi tiêu
