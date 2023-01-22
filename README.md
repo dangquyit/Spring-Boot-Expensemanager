@@ -1,19 +1,19 @@
-# Ứng dụng quản lí chi tiêu
+# Expense manager
 production
 https: http://expensemanager-env.eba-9ehxmguk.us-east-1.elasticbeanstalk.com
-- Đăng nhập
-- Đăng ký tài khoản 
-- Tính tổng tiền chi tiêu
-- Tìm kếm theo name, trong một khoảng thời gian
-- Sắp xếp theo tiền, ngày tạo
-# Công nghệ
+# Functions
+- Login
+- Register 
+- Calculate total spending
+- Search by name, over a period of time
+- Sort by money, creation date
+# Technology
 - Spring Boot
 - Spring MVC
 - Spring Security
 - Spring JPA
 - Thymeleaf
 - JQuery
-
 # Databse
 - Dev: MySQL
 - Prod: PostgreSQL
